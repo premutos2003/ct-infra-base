@@ -22,4 +22,10 @@ variable "version" {
 variable "environment" {
   type = "string"
   default = "dev"
+}variable "acc_key" {
+  type = "string"
+  default = "dev"
+}variable "sec_key" {
+  type = "string"
+  default = "dev"
 }
