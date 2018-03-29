@@ -4,10 +4,10 @@ variable "region" {
   default = "eu-central-1"
 }
 
-variable "acc_key" {
+variable "aws_access_key" {
   type = "string"
   default = "dev"
-}variable "sec_key" {
+}variable "aws_secret_key" {
   type = "string"
   default = "dev"
 }
