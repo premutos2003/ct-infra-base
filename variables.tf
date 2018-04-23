@@ -11,3 +11,8 @@ variable "aws_secret_key" {
   type = "string"
   default = "dev"
 }
+variable "env" {
+  type = "string"
+  default = "dev"
+}
+

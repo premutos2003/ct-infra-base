@@ -2,7 +2,7 @@ resource "aws_vpc" "dev_vpc" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
   tags {
-    Name = "dev-env"
+    Name = "${var.env}-vpc"
   }
 }
 
@@ -37,7 +37,7 @@ resource "aws_security_group" "dev_subnet_sg" {
 resource "aws_internet_gateway" "dev-gw" {
   vpc_id = "${aws_vpc.dev_vpc.id}"
   tags {
-    Name = "dev-vpc"
+    Name = "${var.env}-internet-gw"
   }
 }
 
@@ -50,7 +50,7 @@ resource "aws_route_table" "dev-public" {
   }
 
   tags {
-    Name = "dev route"
+    Name = "${var.env}-route-tb"
   }
 }
 
@@ -58,11 +58,4 @@ resource "aws_route_table" "dev-public" {
 resource "aws_route_table_association" "dev-public-1-a" {
   subnet_id = "${aws_subnet.dev_subnet.id}"
   route_table_id = "${aws_route_table.dev-public.id}"
-}
-
-output "sg_id" {
-  value = "${aws_security_group.dev_subnet_sg.id}"
-}
-output "subnet_id" {
-  value = "${aws_subnet.dev_subnet.id}"
 }
