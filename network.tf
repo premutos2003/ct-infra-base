@@ -1,4 +1,5 @@
 resource "aws_vpc" "dev_vpc" {
+  depends_on = ["aws_s3_bucket.base_s3"]
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
   tags {
@@ -7,12 +8,15 @@ resource "aws_vpc" "dev_vpc" {
 }
 
 resource "aws_subnet" "dev_subnet" {
+  depends_on = ["aws_s3_bucket.base_s3"]
+
   vpc_id     = "${aws_vpc.dev_vpc.id}"
   cidr_block = "10.0.1.0/24"
 }
 
 
 resource "aws_security_group" "dev_subnet_sg" {
+  depends_on = ["aws_s3_bucket.base_s3"]
 
   vpc_id     = "${aws_vpc.dev_vpc.id}"
   ingress {
@@ -35,6 +39,8 @@ resource "aws_security_group" "dev_subnet_sg" {
   }
 }
 resource "aws_internet_gateway" "dev-gw" {
+  depends_on = ["aws_s3_bucket.base_s3"]
+
   vpc_id = "${aws_vpc.dev_vpc.id}"
   tags {
     Name = "${var.env}-internet-gw"
@@ -43,6 +49,8 @@ resource "aws_internet_gateway" "dev-gw" {
 
 # route tables
 resource "aws_route_table" "dev-public" {
+  depends_on = ["aws_s3_bucket.base_s3"]
+
   vpc_id = "${aws_vpc.dev_vpc.id}"
   route {
     cidr_block = "0.0.0.0/0"
@@ -56,6 +64,8 @@ resource "aws_route_table" "dev-public" {
 
 # route associations public
 resource "aws_route_table_association" "dev-public-1-a" {
+  depends_on = ["aws_s3_bucket.base_s3"]
+
   subnet_id = "${aws_subnet.dev_subnet.id}"
   route_table_id = "${aws_route_table.dev-public.id}"
 }
