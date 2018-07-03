@@ -17,3 +17,6 @@ output "env" {
 output "region" {
   value = "${var.region}"
 }
+output "id" {
+  value = "${var.env}-${var.region}"
+}
