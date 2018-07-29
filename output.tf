@@ -20,6 +20,3 @@ output "region" {
 output "id" {
   value = "${var.env}-${var.region}"
 }
-output "status" {
-  value = "running"
-}
